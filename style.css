@@ -16,3 +16,20 @@ body{
     flex-wrap: wrap;
 
 }
+
+.hole {
+    height: 70px;
+    width: 70px;
+    margin: 5px;
+    background-color: black;
+    border-radius: 50%;
+    border: 5px solid gold;
+}
+
+.gold-piece {
+    background-color: gold;
+}
+
+.green-piece{
+    background-color: green;
+}
