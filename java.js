@@ -9,71 +9,69 @@ var stand;
 var rows = 6;
 var columns = 7;
 
-window.onload = function() {
+window.onload = function () {
 
     startGame();
 
 }
 
 function startGame() {
-stand = [];
-currColumns = [5,5,5,5,5,5,5];
+    stand = [];
+    currColumns = [5, 5, 5, 5, 5, 5, 5];
 
-for(let r = 0; r < rows; r++){
-    let row = [];
-    for(let c = 0; c < columns; c++){
-        row.push(' ');
+    for (let r = 0; r < rows; r++) {
+        let row = [];
+        for (let c = 0; c < columns; c++) {
+            row.push(' ');
 
-        //<div id="0-0" class="hole"></div>
-        let hole = document.createElement("div");
-        hole.id = r.toString() + "-" + c.toString();
-        hole.classList.add("hole");
-        hole.addEventListener("click", placePiece);
-        document.getElementById("stand").append(hole);
+            //<div id="0-0" class="hole"></div>
+            let hole = document.createElement("div");
+            hole.id = r.toString() + "-" + c.toString();
+            hole.classList.add("hole");
+            hole.addEventListener("click", placePiece);
+            document.getElementById("stand").append(hole);
+        }
+        stand.push(row);
     }
-    stand.push(row);
-}
 
 }
 
-function placePiece(){
-    if(gameOver){
+function placePiece() {
+    if (gameOver) {
         return;
     }
-        let coords = this.id.split("-");
-        let r = parseInt(coords[0]);
-        let c = parseInt(coords[1]);
+    let coords = this.id.split("-");
+    let c = parseInt(coords[1]);
 
-        r = currColumns[c];
-        if(r<0){
-            return;
-        }
+    let r = currColumns[c];
+    if (r < 0) {
+        return;
+    }
 
-        stand[r][c] = current;
-        let hole = document.getElementById(r.toString() + "-" + c.toString());
-        if(current == playerGold)
-        {
-            hole.classList.add("gold-piece");
-            current = playerGreen;
-        }
-        else{
-            hole.classList.add("green-piece");
-            current = playerGold;
-        }
-        r -= 1;
-        currColumns[c] = r;
+    stand[r][c] = current;
+    let hole = document.getElementById(r.toString() + "-" + c.toString());
+    if (current == playerGold) {
+        hole.classList.add("gold-piece");
+        current = playerGreen;
+    }
+    else {
+        hole.classList.add("green-piece");
+        current = playerGold;
+    }
+    r -= 1;
+    currColumns[c] = r;
 
-        checkWin();
+    checkWin();
 }
 
 
 function checkWin() {
-//horizontal
-    for(let r = 0; r < rows; r++){
-        for(let c = 0; c < columns - 3; c++){
-            if(stand[r][c] != ' '){
-                if(stand[r][c] == stand[r][c+1] && stand[r][c+1] == stand[r][c+2] && stand[r][c+2] == stand[r][c+3]){
-                    setWinner(r,c);
+    //horizontal
+    for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < columns - 3; c++) {
+            if (stand[r][c] != ' ') {
+                if (stand[r][c] == stand[r][c + 1] && stand[r][c + 1] == stand[r][c + 2] && stand[r][c + 2] == stand[r][c + 3]) {
+                    setWinner(r, c);
                     return;
                 }
             }
@@ -81,11 +79,11 @@ function checkWin() {
     }
 
     //vertical
-    for(let c =0; c < columns; c++){
-        for(let r =0; r < rows - 3; r++){
-            if(stand[r][c] != ' '){
-                if(stand[r][c] == stand[r+1][c] && stand[r+1][c] == stand[r+2][c] && stand[r+3][c]){
-                    setWinner(r,c);
+    for (let c = 0; c < columns; c++) {
+        for (let r = 0; r < rows - 3; r++) {
+            if (stand[r][c] != ' ') {
+                if (stand[r][c] == stand[r + 1][c] && stand[r + 1][c] == stand[r + 2][c] && stand[r + 3][c]) {
+                    setWinner(r, c);
                     return;
                 }
             }
@@ -93,11 +91,11 @@ function checkWin() {
     }
 
     //diagnal
-    for(let r = 0; r < rows - 3;r++){
-        for(let c = 0; c < columns - 3; c++){
-            if(stand[r][c] != ' '){
-                if(stand[r][c] == stand[r+1][c+1] && stand[r+1][c+1] == stand[r+2][c+2] && stand[r+2][c+2] == stand[r+3][c+3]){
-                    setWinner(r,c);
+    for (let r = 0; r < rows - 3; r++) {
+        for (let c = 0; c < columns - 3; c++) {
+            if (stand[r][c] != ' ') {
+                if (stand[r][c] == stand[r + 1][c + 1] && stand[r + 1][c + 1] == stand[r + 2][c + 2] && stand[r + 2][c + 2] == stand[r + 3][c + 3]) {
+                    setWinner(r, c);
                     return;
 
                 }
@@ -105,11 +103,11 @@ function checkWin() {
         }
     }
 
-    for(let r = 3; r < rows; r++){
-        for(let c = 0; c < columns - 3; c++){
-            if(stand[r][c] != ' '){
-                if(stand[r][c] == stand[r-1][c+1] && stand[r-1][c+1] == stand[r-2][c+2] && stand[r-2][c+2] == stand[r-3][c+3]){
-                    setWinner(r,c);
+    for (let r = 3; r < rows; r++) {
+        for (let c = 0; c < columns - 3; c++) {
+            if (stand[r][c] != ' ') {
+                if (stand[r][c] == stand[r - 1][c + 1] && stand[r - 1][c + 1] == stand[r - 2][c + 2] && stand[r - 2][c + 2] == stand[r - 3][c + 3]) {
+                    setWinner(r, c);
                     return;
 
                 }
@@ -118,13 +116,12 @@ function checkWin() {
     }
 }
 
-function setWinner(r,c) {
+function setWinner(r, c) {
     let winner = document.getElementById("winner");
-    if(stand[r][c] == playerGold)
-    {
+    if (stand[r][c] == playerGold) {
         winner.innerText = "Gold Knight Wins";
     }
-    else{
+    else {
         winner.innerText = "Green Knight Wins";
     }
     gameOver = true;
